@@ -1,0 +1,58 @@
+﻿@model PTC.Teste.Models.Marca.MarcaViewModel
+
+<html>
+<head>
+    @if (Model.Id == 0)
+    {
+        @await Component.InvokeAsync("PageHeaderComponent", new { Title = "Incluir Marca", Routes = new Dictionary<string, string>() { { "Cadastro", "" }, { "Marca", "" }, { "Incluir", "" } } })
+    }
+    else
+    {
+        @await Component.InvokeAsync("PageHeaderComponent", new { Title = "Alterar Marca", Routes = new Dictionary<string, string>() { { "Cadastro", "" }, { "Marca", "" }, { "Alterar", "" } } })
+    }    
+</head>
+<body>
+    <form asp-controller="Marca" asp-action="AddOrEdit" method="post">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title"></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="form-group col-md-12" hidden>
+                        <label asp-for="Id"></label>
+                        <input type="number" class="form-control" id="Id" asp-for="Id" readonly>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Nome"></label>
+                        <input type="text" class="form-control" asp-for="Nome" maxlength="100">
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+
+                    <div class="form=group col-md-6">
+                        <label asp-for="Situacao"></label>
+                        <select class="form-control select2" asp-for="Situacao" asp-items="Html.GetEnumSelectList<PTC.Teste.Entity.Enum.Situacao>()">
+                            <option value="" selected="selected"></option>
+                        </select>
+                        <span asp-validation-for="Situacao" class="text-danger"></span>
+                    </div>
+
+                </div>
+                @await Component.InvokeAsync("DefaultAddOrEditComponent", new { Controller = "Marca", Id = Model.Id })
+            </div>
+            <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+    </form>
+    <script src="~/plugins/jquery/jquery.js"></script>        
+    <script src="~/plugins/jquery-mask/jquery.mask.min.js"></script>
+    <script>
+        $(function () {
+            $(".select2").select2();
+        })
+    </script>
+</body>
+</html>

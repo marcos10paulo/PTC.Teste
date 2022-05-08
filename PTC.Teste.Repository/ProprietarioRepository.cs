@@ -1,0 +1,130 @@
+﻿using PTC.Teste.Context;
+using PTC.Teste.Entity;
+using PTC.Teste.Entity.Enum;
+using PTC.Teste.Repository.Repository;
+using System;
+using System.Linq;
+
+namespace PTC.Teste.Repository
+{
+    public class ProprietarioRepository : IDefaultRepository<Proprietario>, IDisposable
+    {
+        private readonly PTCTesteContext _db = new();
+        private readonly IRepository<Proprietario> _repository;
+
+        public ProprietarioRepository(PTCTesteContext context = null)
+        {
+            _repository = new Repository<Proprietario>(context ?? new PTCTesteContext());
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public string Alterar(Proprietario entity)
+        {
+            string mensagem = ValidarDados(entity);
+            if (mensagem == "")
+            {
+                mensagem = _repository.Update(entity);
+            }
+            return mensagem;
+        }
+
+        public string Excluir(int id)
+        {
+            string mensagem = ValidaExclusao();
+            if (mensagem == "")
+            {
+                mensagem = _repository.Delete(id);
+            }
+            return mensagem;
+        }
+
+        public IQueryable<Proprietario> Filtrar(string condicao)
+        {
+            return _repository.Filter(condicao);
+        }
+
+        public string Incluir(Proprietario entity)
+        {
+            string mensagem = ValidarDados(entity);
+
+            if (mensagem == "")
+            {
+                mensagem = _repository.Insert(entity);
+            }
+            return mensagem;
+        }
+
+        public Proprietario Selecionar(int id)
+        {
+            return _repository.GetById(id);
+        }
+
+        public Proprietario SelecionarPorDocumento(string documento)
+        {
+            return this.SelecionarTodos().Where(w => w.Documento == documento).FirstOrDefault();
+        }
+
+        public IQueryable<Proprietario> SelecionarAtivos()
+        {
+            return this.SelecionarTodos().Where(w => w.Status == Situacao.Ativo);
+        }
+
+        public IQueryable<Proprietario> SelecionarTodos()
+        {
+            return _repository.GetAll();
+        }
+
+        public string ValidarDados(Proprietario entity)
+        {
+            string mensagem = "";
+
+            if (entity.Nome.Trim() == "")
+            {
+                mensagem = "Nome não informado!";
+            }
+            else if (entity.Documento.Trim() == "")
+            {
+                mensagem = "Documento não informado!";
+            }
+            else if (entity.Email.Trim() == "")
+            {
+                mensagem = "E-mail não informado!";
+            }
+            else if (entity.Cep.Trim() == "" || entity.Endereco.Trim() == "" || entity.Numero.Trim() == "" || entity.Bairro.Trim() == "" || entity.Cidade.Trim() == "" || entity.Estado.Trim() == "")
+            {
+                mensagem = "Endereço completo não informado!";
+            }
+            else
+            {
+                using ProprietarioRepository proprietarioRepository = new(_db);
+
+                Proprietario propAux = proprietarioRepository.SelecionarPorDocumento(entity.Documento);
+
+                if (propAux != null && propAux.Id != entity.Id)
+                {
+                    mensagem = $"Documento já cadastrado anteriormente!";
+                }
+            }
+
+            return mensagem;
+        }
+
+        public static string ValidaExclusao()
+        {
+            return "Não é permitido a exclusão do registro!";
+        }
+    }
+}

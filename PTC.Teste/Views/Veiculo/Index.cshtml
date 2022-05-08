@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PTC.Teste.Models.Veiculo.VeiculoViewModel>
+
+<html>
+<head>
+    @await Component.InvokeAsync("PageHeaderComponent", new { Title = "Cadastro de Veículos", Routes = new Dictionary<string, string>() { { "Cadastro", "" }, { "Veículos", "" } } })
+</head>
+<body>
+    @await Component.InvokeAsync("DefaultIndexComponent", new { Controller = "Veiculo" })
+
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="grid" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th hidden="hidden">Id</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Proprietário</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td hidden="hidden">@item.Id</td>
+                        <td>@item.Marca</td>
+                        <td>@item.Modelo</td>
+                        <td>@item.Proprietario</td>
+                        <td>@item.SituacaoVeiculo</td>
+                    </tr>
+                }
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th hidden="hidden">Id</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Proprietário</th>
+                    <th>Status</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</body>
+</html>
+<!-- jQuery -->
+<script src="~/plugins/jquery/jquery.min.js"></script>
+

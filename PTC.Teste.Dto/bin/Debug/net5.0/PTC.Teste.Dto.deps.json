@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "PTC.Teste.Dto/1.0.0": {
+        "dependencies": {
+          "PTC.Teste.Entity": "1.0.0"
+        },
+        "runtime": {
+          "PTC.Teste.Dto.dll": {}
+        }
+      },
+      "PTC.Teste.Entity/1.0.0": {
+        "runtime": {
+          "PTC.Teste.Entity.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PTC.Teste.Dto/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PTC.Teste.Entity/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

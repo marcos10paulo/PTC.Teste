@@ -1,0 +1,182 @@
+﻿@model PTC.Teste.Models.Proprietario.ProprietarioViewModel
+
+<html>
+<head>
+    @if (Model.Id == 0)
+    {
+        @await Component.InvokeAsync("PageHeaderComponent", new { Title = "Incluir Proprietário", Routes = new Dictionary<string, string>() { { "Cadastro", "" }, { "Proprietário", "" }, { "Incluir", "" } } })
+    }
+    else
+    {
+        @await Component.InvokeAsync("PageHeaderComponent", new { Title = "Alterar Proprietário", Routes = new Dictionary<string, string>() { { "Cadastro", "" }, { "Proprietário", "" }, { "Alterar", "" } } })
+    }
+</head>
+<body>
+    <form asp-controller="Proprietario" asp-action="AddOrEdit" method="post">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title"></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="form-group col-md-12" hidden>
+                        <label asp-for="Id"></label>
+                        <input type="number" class="form-control" id="Id" asp-for="Id" readonly>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Nome"></label>
+                        <input type="text" class="form-control" asp-for="Nome" maxlength="100">
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+
+                    <div class="form=group col-md-6">
+                        <label asp-for="Status"></label>
+                        <select class="form-control select2" asp-for="Status" asp-items="Html.GetEnumSelectList<PTC.Teste.Entity.Enum.Situacao>()">
+                            <option value="" selected="selected"></option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Documento"></label>
+                        <input type="text" class="form-control documento" asp-for="Documento" maxlength="100">
+                        <span asp-validation-for="Documento" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Email"></label>
+                        <input type="text" class="form-control" asp-for="Email" maxlength="100">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="Cep" asp-for="Cep"></label>
+                        <input class="form-control cep" asp-for="Cep" name="Cep" id="cep">
+                        <span asp-validation-for="Cep" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-1" data-toggle='tooltip' title='Limpar dados do Endereço'>
+                        <button type="button" class="btn btn-default btn-block btn-sm" style="margin-top:35px" id="limparendereco"><i class="fas fa-recycle"></i></button>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label asp-for="Endereco" class="control-label"></label>
+                        <input type="text" asp-for="Endereco" class="form-control" id="endereco"  maxlength=100>
+                        <span asp-validation-for="Endereco" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label asp-for="Numero" class="control-label"></label>
+                        <input type="text" asp-for="Numero" class="form-control" id="numero" maxlength=20>
+                        <span asp-validation-for="Numero" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label asp-for="Bairro" class="control-label"></label>
+                        <input type="text" asp-for="Bairro" class="form-control" id="bairro" maxlength=50>
+                        <span asp-validation-for="Bairro" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label asp-for="Cidade" class="control-label"></label>
+                        <input type="text" asp-for="Cidade" class="form-control" id="cidade" maxlength=50>
+                        <span asp-validation-for="Cidade" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-1">
+                        <label asp-for="Estado" class="control-label"></label>
+                        <input type="text" asp-for="Estado" class="form-control" id="estado" maxlength=2>
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+
+                </div>
+                @await Component.InvokeAsync("DefaultAddOrEditComponent", new { Controller = "Proprietario", Id = Model.Id })
+            </div>
+            <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+    </form>
+    <script src="~/plugins/jquery/jquery.js"></script>
+    <script src="~/plugins/jquery-mask/jquery.mask.min.js"></script>
+    <script>
+        $(function () {
+            $(".select2").select2();
+            $('.documento').mask('000.000.000-00', { reverse: false });
+            $('.cep').mask('00000-000', { reverse: false });
+
+            var $input1 = document.getElementById('cep');
+
+            $input1.addEventListener('blur', function () {
+                BuscaCepPedido(this);
+            });
+
+            var $button1 = $('#limparendereco');
+
+            $button1.click(function () {
+                limparendereco();
+            });
+
+        })
+
+        function BuscaCepPedido(o) {
+
+            var cep = o.value.replace(/\D/g, '');
+
+            if (cep != "") {
+                var validaCep = /^[0-9]{8}$/;
+
+                if (validaCep.test(cep)) {
+                    if ($("#endereco").val() === "") {
+                        $("#endereco").val("...");
+                    }
+                    if ($("#bairro").val() === "") {
+                        $("#bairro").val("...");
+                    }
+                    if ($("#cidade").val() === "") {
+                        $("#cidade").val("...");
+                    }
+                    if ($("#estado").val() === "") {
+                        $("#estado").val("...");
+                    }
+
+                    $.getJSON("https://brasilapi.com.br/api/cep/v2/" + cep,
+                        function (dados) {
+                            if (!("erro" in dados)) {
+                                if ($("#endereco").val() === "...") {
+                                    $("#endereco").val(dados.street);
+                                }
+
+                                if ($("#bairro").val() === "...") {
+                                    $("#bairro").val(dados.neighborhood);
+                                }
+                                if ($("#cidade").val() === "...") {
+                                    $("#cidade").val(dados.city);
+                                }
+                                if ($("#estado").val() === "...") {
+                                    $("#estado").val(dados.state);
+                                }
+                            }
+                            else {
+                                alert("Cep não encontrado");
+                            }
+                        });
+                }
+                else {
+                    alert("Formato de cep inválido");
+                }
+            }
+        }
+
+         function limparendereco() {
+            $('#endereco').val('');
+            $('#numero').val('');
+            $('#bairro').val('');
+            $('#cidade').val('');
+            $('#estado').val('');
+        }
+    </script>
+</body>
+</html>

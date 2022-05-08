@@ -1,0 +1,12 @@
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\bin\Debug\net5.0\PTC.Teste.Entity.deps.json
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\bin\Debug\net5.0\PTC.Teste.Entity.dll
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\bin\Debug\net5.0\PTC.Teste.Entity.pdb
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\PTC.Teste.Entity.csproj.AssemblyReference.cache
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\PTC.Teste.Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\PTC.Teste.Entity.AssemblyInfoInputs.cache
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\PTC.Teste.Entity.AssemblyInfo.cs
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\PTC.Teste.Entity.csproj.CoreCompileInputs.cache
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\PTC.Teste.Entity.dll
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\refint\PTC.Teste.Entity.dll
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\PTC.Teste.Entity.pdb
+C:\gitrepository\PTC.Teste\PTC.Teste\PTC.Teste.Entity\obj\Debug\net5.0\ref\PTC.Teste.Entity.dll
